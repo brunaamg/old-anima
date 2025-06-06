@@ -192,7 +192,8 @@
       <input type="password" id="confirm-password" placeholder="Confirmar Senha" />
     </div>
     <button id="register-btn">Cadastrar</button>
-    <p class="signup">Já tem uma conta? <a href="login.html" style="text-decoration: underline; color: #fdeab5;">Entrar</a></p>
+    <p class="signup">Já tem uma conta? <a href="login.html"
+        style="text-decoration: underline; color: #fdeab5;">Entrar</a></p>
   </main>
 
   <footer>
@@ -208,59 +209,47 @@
     </div>
   </footer>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      updateProfile
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyBxn8VAezPWgOM1XcPhtlOn3JnqGC4CwVA",
-      authDomain: "dados-8fd2a.firebaseapp.com",
-      projectId: "dados-8fd2a",
-      storageBucket: "dados-8fd2a.appspot.com",
-      messagingSenderId: "641046130684",
-      appId: "1:641046130684:web:39a0db8f075897d8d44c79"
+      apiKey: "AIzaSyC0dZ3yxmoGTh9Os8zwKqKpsnR1i03SNM0",
+      authDomain: "oldanima-522d2.firebaseapp.com",
+      projectId: "oldanima-522d2",
+      storageBucket: "oldanima-522d2.firebasestorage.app",
+      messagingSenderId: "990144205615",
+      appId: "1:990144205615:web:0300139b60046368c587da"
     };
+    firebase.initializeApp(firebaseConfig);
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    document.getElementById('register-btn').addEventListener('click', function () {
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('password').value;
+      const confirmar = document.getElementById('confirm-password').value;
 
-    const registerBtn = document.getElementById("register-btn");
-    registerBtn.addEventListener("click", async () => {
-      const nome = document.getElementById("nome").value.trim();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const confirmPassword = document.getElementById("confirm-password").value;
-
-      if (!nome || !email || !password || !confirmPassword) {
-        alert("Preencha todos os campos.");
+      if (!nome || !email || !senha || !confirmar) {
+        alert('Preencha todos os campos.');
         return;
       }
 
-      if (password !== confirmPassword) {
-        alert("As senhas não coincidem.");
+      if (senha !== confirmar) {
+        alert('As senhas não coincidem.');
         return;
       }
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-        // Atualiza nome do usuário no perfil do Firebase
-        await updateProfile(userCredential.user, {
-          displayName: nome
+      firebase.auth().createUserWithEmailAndPassword(email, senha)
+        .then(() => {
+          alert('Cadastro realizado com sucesso!');
+          window.location.href = 'login.html';
+        })
+        .catch(error => {
+          alert('Erro: ' + error.message);
         });
-
-        alert("Cadastro realizado com sucesso!");
-        window.location.href = "login.html";
-      } catch (error) {
-        console.error("Erro ao cadastrar:", error);
-        alert("Erro ao cadastrar: " + error.message);
-      }
     });
   </script>
+
 </body>
 
 </html>
