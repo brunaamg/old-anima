@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oldanima</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      @font-face {
+        font-family: nickson;
+        src: url(S&S\ Nickson\ One.otf);
+      }
+
+      body {
+        margin: 0;
+        padding: 0 60px 0;
+        font-family: nickson;
+        background-color: #fdf6e4;
+        color: #000;
+        overflow-x: hidden;
+        letter-spacing: 0.15vh;
+        position: relative;
+        min-height: 100vh;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+        z-index: 0;
+        background: repeating-linear-gradient(
+          to bottom,
+          #000000 0px,
+          #000000 40px,
+          #ffffff 40px,
+          #ffffff 44px,
+          #fce4b3 44px,
+          #fce4b3 80px,
+          #ffffff 80px,
+          #ffffff 84px
+        );
+      }
+
+      body::before {
+        left: 0;
+      }
+
+      body::after {
+        right: 0;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 30px;
+        background-color: #fdf6e4;
+        position: relative;
+        z-index: 10;
+      }
+
+      .logo img {
+        height: 10vh;
+        max-height: 70px;
+      }
+
+      .search-bar {
+        flex: 1;
+        margin: 0 30px;
+        position: relative;
+      }
+
+      .search-bar input {
+        display: flex;
+        width: 40vh;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid #000;
+        border-radius: 8px;
+        justify-self: center;
+        font-family: nickson;
+        letter-spacing: 0.1vh;
+        font-size: large;
+        background: #fdf6e4;
+      }
+
+      .login-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .login-btn button {
+        background: #000;
+        color: #e6c980;
+        border: none;
+        padding: 10px 20px;
+        font-family: "Georgia", serif;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 6px;
+        font-family: nickson;
+        font-size: large;
+        letter-spacing: 0.1vh;
+        transition: transform 0.2s;
+      }
+
+      .login-btn button:hover {
+        transform: scale(1.05);
+      }
+
+      main {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 40px;
+        gap: 40px;
+        flex: 1;
+        position: relative;
+        z-index: 1;
+        margin-top: -60px;
+        margin-bottom: -50px;
+      }
+
+      .tela {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .tela h1 {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .tela p {
+        font-size: 20px;
+        line-height: 1.6;
+        max-width: 600px;
+      }
+
+      footer {
+        background-color: #000;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 60px;
+        box-sizing: border-box;
+        width: calc(100% - 0px);
+        margin: 40px auto 0;
+        position: relative;
+        border-top: 2px solid #fdeab5;
+      }
+
+      .icones-footer {
+        display: flex;
+        gap: 10px;
+      }
+
+      .icones-footer img {
+        height: 6vh;
+        max-height: 40px;
+        transition: transform 0.3s;
+      }
+
+      .icones-footer img:hover {
+        transform: translateY(-3px);
+      }
+
+      .footer-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      footer button {
+        background-color: #fdeab5;
+        color: #000;
+        border-radius: 10px;
+        font-family: nickson;
+        width: 100px;
+        height: 30px;
+        border: none;
+        font-size: large;
+        letter-spacing: 0.05vh;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      footer button:hover {
+        background-color: #ffd970;
+      }
+
+      .footer-logo {
+        height: 60px;
+      }
+
+      .carousel-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+        margin: 40px 0;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .carousel-slide {
+        min-width: 100%;
+        box-sizing: border-box;
+        padding: 0 60px;
+        display: flex;
+        align-items: center;
+      }
+
+      .carousel-content {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        /* Removemos o gap para colar o vídeo à direita */
+        min-height: 400px;
+        justify-content: space-between;
+        /* Força o texto para a esquerda e o vídeo para a direita */
+        width: 100%;
+        /* Garante que ocupe toda a largura */
+      }
+
+      /* Texto (lado esquerdo) */
+      .carousel-text {
+        flex: 0 0 45%;
+        /* Largura fixa */
+        padding-right: 20px;
+        /* Espaço entre texto e vídeo */
+      }
+
+      .carousel-text h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #000;
+        text-shadow: 2px 2px 0 #fdeab5;
+      }
+
+      .genre {
+        font-size: 20px;
+        color: #555;
+        margin-bottom: 30px;
+        font-weight: bold;
+        display: inline-block;
+        padding: 5px 15px;
+        background: #fdeab5;
+        border-radius: 20px;
+      }
+
+      .description {
+        font-size: 18px;
+        line-height: 1.6;
+        color: #333;
+        background: rgba(253, 234, 180, 0.3);
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 4px solid #e6c980;
+      }
+
+      .video-preview {
+        flex: 0 0 50%;
+        /* Largura fixa */
+        height: 340px;
+        /* Bordas arredondadas apenas do lado esquerdo */
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        background: #000;
+        aspect-ratio: 16/9;
+        border-radius: 20px;
+        position: relative;
+
+        /* Compensa o padding do slide (ajuste conforme necessário) */
+      }
+
+      /* Ajuste para garantir que o iframe ocupe todo o espaço */
+      .video-preview iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        object-fit: cover;
+        /* Garante que o vídeo preencha o espaço */
+      }
+
+      .video-preview::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 3px solid #fdeab5;
+        border-radius: 20px;
+        pointer-events: none;
+        z-index: 2;
+        box-sizing: border-box; /* Adicione esta linha importante */
+      }
+      .carousel-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-top: 30px;
+        z-index: 100;
+        margin-bottom: 30px;
+      }
+
+      .carousel-btn {
+        background: #000;
+        color: #fdeab5;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 24px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+      }
+
+      .carousel-btn:hover {
+        background: #333;
+      }
+
+      .carousel-dots {
+        display: flex;
+        gap: 10px;
+      }
+
+      .carousel-dots .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: #ccc;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .carousel-dots .dot.active {
+        background: #000;
+      }
+
+      .carousel-dots .dot:hover {
+        background: #888;
+      }
+
+      .carousel-section {
+        padding: 0 60px;
+        font-family: nickson;
+        position: relative;
+        margin-bottom: 60px;
+      }
+
+      .carousel-section h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        padding-left: 10px;
+        border-left: 5px solid #e6c980;
+        padding-left: 15px;
+      }
+
+      .antigas-carousel-container {
+        position: relative;
+        overflow: hidden;
+        padding: 0 50px;
+      }
+
+      .antigas-carousel-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        gap: 15px;
+      }
+
+      .antigas-carousel-slide {
+        display: flex;
+        flex: 0 0 calc(100% - 30px);
+        gap: 15px;
+        padding: 10px 5px;
+        box-sizing: border-box;
+      }
+
+      .antigas-item {
+        width: calc((100% - 20px) / 3);
+        height: 150px;
+        background: linear-gradient(to top, #cde7f0, #f0faff);
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: #333;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+        transition: transform 0.3s, box-shadow 0.3s;
+        padding: 10px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .antigas-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .antigas-item::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(253, 234, 180, 0.2),
+          rgba(230, 201, 128, 0.3)
+        );
+        z-index: 1;
+      }
+
+      .antigas-carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: #000;
+        color: #fdeab5;
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.8;
+        transition: opacity 0.3s, transform 0.2s;
+      }
+
+      .antigas-carousel-btn:hover {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .antigas-carousel-btn.prev {
+        left: 5px;
+      }
+
+      .antigas-carousel-btn.next {
+        right: 5px;
+      }
+
+      .antigas-carousel-btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        transform: translateY(-50%);
+      }
+
+      /* Efeito de vintage para as seções */
+      .vintage-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="oldFilm"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="R"/></filter><rect width="100%" height="100%" filter="url(%23oldFilm)" opacity="0.05"/></svg>');
+        pointer-events: none;
+        z-index: 1;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <a href="site.html"><img src="img/Logo.png" alt="Logo Oldanima" /></a>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Pesquisar" />
+      </div>
+      <div class="login-btn">
+        <a href=""
+          ><img src="img/Login.png" alt="Ícone de perfil" height="45"
+        /></a>
+        <a href="login.html"><button>ENTRAR</button></a>
+      </div>
+    </header>
+
+    <main>
+      <section class="carousel-container">
+        <div class="carousel-track">
+          <!-- Slide 1: Vapor Willie -->
+          <div class="carousel-slide">
+            <div class="carousel-content">
+              <div class="carousel-text">
+                <h1>O Vapor Willie</h1>
+                <p class="genre">Musical • Comédia</p>
+                <p class="description">
+                  O primeiro desenho animado de Mickey Mouse com som
+                  sincronizado.
+                </p>
+              </div>
+              <div class="video-preview">
+                <iframe
+                  id="vaporWillieVideo"
+                  src="https://www.youtube.com/embed/BBgghnQF6E4?enablejsapi=1"
+                  frameborder="0"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2: Betty Boop -->
+          <div class="carousel-slide">
+            <div class="carousel-content">
+              <div class="carousel-text">
+                <h1>A pantera Cor-de-rosa</h1>
+                <p class="genre">Comédia • Curta</p>
+                <p class="description">
+                  As increveis aventuras de uma pantera co-de-rosa.
+                </p>
+              </div>
+              <div class="video-preview">
+                <iframe
+                  id="bettyBoopVideo"
+                  src="https://www.youtube.com/embed/RzriJpYiGjw?enablejsapi=1"
+                  frameborder="0"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3: Popeye -->
+          <div class="carousel-slide">
+            <div class="carousel-content">
+              <div class="carousel-text">
+                <h1>Popeye, o Marinheiro</h1>
+                <p class="genre">Aventura • Comédia</p>
+                <p class="description">
+                  Popeye enfrenta Brutus para salvar Olívia Palito.
+                </p>
+              </div>
+              <div class="video-preview">
+                <iframe
+                  id="popeyeVideo"
+                  src="https://www.youtube.com/embed/MzXAasCLj1g?enablejsapi=1"
+                  frameborder="0"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4: Pica-Pau -->
+          <div class="carousel-slide">
+            <div class="carousel-content">
+              <div class="carousel-text">
+                <h1>Pica-Pau</h1>
+                <p class="genre">Comédia • Slapstick</p>
+                <p class="description">
+                  As travessuras do pássaro mais malandro da animação.
+                </p>
+              </div>
+              <div class="video-preview">
+                <iframe
+                  id="picaPauVideo"
+                  src="https://www.youtube.com/embed/8ZFiHulmOPE?enablejsapi=1"
+                  frameborder="0"
+                  allowfullscreen
+                >
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-controls">
+          <button class="carousel-btn prev">&#10094;</button>
+          <div class="carousel-dots"></div>
+          <button class="carousel-btn next">&#10095;</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Seção Antigas -->
+    <section class="carousel-section">
+      <h2>Antigas</h2>
+      <div class="antigas-carousel-container">
+        <button class="antigas-carousel-btn prev">&#10094;</button>
+        <div class="antigas-carousel-track">
+          <div class="antigas-carousel-slide">
+            <div class="antigas-item">Capa 1</div>
+            <div class="antigas-item">Capa 2</div>
+            <div class="antigas-item">Capa 3</div>
+          </div>
+          <div class="antigas-carousel-slide">
+            <div class="antigas-item">Capa 4</div>
+            <div class="antigas-item">Capa 5</div>
+            <div class="antigas-item">Capa 6</div>
+          </div>
+        </div>
+        <button class="antigas-carousel-btn next">&#10095;</button>
+      </div>
+    </section>
+
+    <!-- Seção Animações -->
+    <section class="carousel-section">
+      <h2>Animações</h2>
+      <div class="antigas-carousel-container">
+        <button class="antigas-carousel-btn prev">&#10094;</button>
+        <div class="antigas-carousel-track">
+          <div class="antigas-carousel-slide">
+            <div class="antigas-item">Capa 1</div>
+            <div class="antigas-item">Capa 2</div>
+            <div class="antigas-item">Capa 3</div>
+          </div>
+          <div class="antigas-carousel-slide">
+            <div class="antigas-item">Capa 4</div>
+            <div class="antigas-item">Capa 5</div>
+            <div class="antigas-item">Capa 6</div>
+          </div>
+        </div>
+        <button class="antigas-carousel-btn next">&#10095;</button>
+      </div>
+    </section>
+
+    <!-- Seção Animes -->
+    <section class="carousel-section">
+      <h2>Animes</h2>
+      <div class="antigas-carousel-container">
+        <button class="antigas-carousel-btn prev">&#10094;</button>
+        <div class="antigas-carousel-track">
+          <div class="antigas-carousel-slide">
+            <div class="antigas-item">Capa 1</div>
+            <div class="antigas-item">Capa 2</div>
+            <div class="antigas-item">Capa 3</div>
+          </div>
+          <div class="antigas-carousel-slide">
+            <div class="antigas-item">Capa 4</div>
+            <div class="antigas-item">Capa 5</div>
+            <div class="antigas-item">Capa 6</div>
+          </div>
+        </div>
+        <button class="antigas-carousel-btn next">&#10095;</button>
+      </div>
+    </section>
+
+    <script>
+      // Verifica se há um nome de usuário armazenado e atualiza o botão
+      document.addEventListener("DOMContentLoaded", function () {
+        const username = localStorage.getItem("username");
+        const userButton = document.getElementById("user-button");
+
+        if (username && userButton) {
+          userButton.textContent = username.toUpperCase();
+        }
+      });
+    </script>
+    <footer>
+      <div class="icones-footer">
+        <a href="#"><img src="./img/face.png" alt="facebook" /></a>
+        <a href="#"><img src="./img/insta.png" alt="instagram" /></a>
+        <a href="#"><img src="./img/twitter.png" alt="twitter" /></a>
+        <a href="#"><img src="./img/yt.png" alt="youtube" /></a>
+      </div>
+      <div class="footer-right">
+        <button>SAIBA MAIS</button>
+        <img src="img/Logo.png" alt="Logo Oldanima" class="footer-logo" />
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

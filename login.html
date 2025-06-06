@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+
+  <style>
+    @font-face {
+      font-family: nickson;
+      src: url('S&S Nickson One.otf');
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      margin: 0;
+      font-family: nickson;
+      background-color: #fdf6e4;
+      color: #000;
+      overflow-x: hidden;
+      letter-spacing: 0.15vh;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      font-size: 2vh;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      z-index: 1;
+      background: repeating-linear-gradient(to bottom,
+          #000 0px, #000 40px,
+          #fff 40px, #fff 44px,
+          #fce4b3 44px, #fce4b3 80px,
+          #fff 80px, #fff 84px);
+    }
+
+    body::before {
+      left: 0;
+    }
+
+    body::after {
+      right: 0;
+    }
+
+    .logo {
+      align-self: flex-start;
+      margin: 0 60px;
+    }
+
+    .logo img {
+      display: flex;
+      height: 80px;
+      margin-top: 2vh;
+    }
+
+    main {
+      background-color: #000;
+      color: #fdeab5;
+      height: auto;
+      width: 70vh;
+      border-radius: 20px;
+      padding: 2vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      z-index: 1;
+    }
+
+    main h1 {
+      align-self: flex-start;
+      margin-left: 50px;
+      margin-top: 10px;
+      font-size: 3.5vh;
+    }
+
+    .login-container {
+      background-color: #000;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 50vh;
+      color: #e5c585;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .login-container input[type="email"],
+    .login-container input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      background: #000;
+      color: #e5c585;
+      font-family: nickson;
+      letter-spacing: 0.1vh;
+      font-size: medium;
+    }
+
+    .login-container input::placeholder {
+      color: #e5c585;
+    }
+
+    main button {
+      background-color: #fdeab5;
+      color: black;
+      border-radius: 10px;
+      width: 350px;
+      height: 40px;
+      font-family: nickson;
+      font-size: 2vh;
+      margin-top: 10px;
+    }
+
+    .forgot {
+      display: block;
+      margin-bottom: 20px;
+      font-size: medium;
+      color: #e5c585;
+      text-align: center;
+      text-decoration: underline;
+    }
+
+    .remember {
+      display: flex;
+      margin: 15px 0;
+      font-size: 1em;
+      color: #fff;
+      align-self: flex-start;
+      margin-left: 50px;
+    }
+
+    .signup {
+      font-size: 1em;
+      color: #e5c585;
+      align-self: flex-start;
+      margin-left: 50px;
+    }
+
+    .logout {
+      font-size: 1em;
+      color: #e5c585;
+      align-self: flex-start;
+      margin-left: 50px;
+      margin-top: 5px;
+    }
+
+    .logout a {
+      color: #e5c585;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .logout button {
+      background-color: #fdeab5;
+      color: #000;
+      border-radius: 6px;
+      padding: 8px 14px;
+      border: none;
+      font-family: nickson;
+      font-size: medium;
+      cursor: pointer;
+      margin-top: 0px;
+    }
+
+    footer {
+      background-color: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 0 60px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .footer-right {
+      display: flex;
+      margin-left: auto;
+      align-items: center;
+      gap: 20px;
+    }
+
+    footer button {
+      background-color: #fdeab5;
+      color: #000;
+      border-radius: 10px;
+      font-family: nickson;
+      width: 100px;
+      height: 30px;
+      border: none;
+      font-size: large;
+      letter-spacing: 0.05vh;
+      cursor: pointer;
+    }
+
+    .footer-logo {
+      height: 60px;
+    }
+
+    .icones-footer {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icones-footer img {
+      height: 6vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="logo">
+    <a href="site.html"><img src="img/Logo.png" alt="Logo Oldanima"></a>
+  </div>
+
+  <main>
+    <h1>ENTRAR</h1>
+    <div class="login-container">
+      <input type="email" name="email" placeholder="E-mail" />
+      <input type="password" name="password" placeholder="Senha" />
+
+    </div>
+    <a href="#" class="forgot">Esqueceu a senha?</a>
+    <button>Entrar</button>
+    <label class="remember">
+      <input type="checkbox" /> Lembrar-se de mim
+    </label>
+    <p class="signup"><a href="cadastro.html">Primeira vez aqui? Cadastre-se.</a></p>
+    <p class="logout"><a href="#" id="logout-btn">Sair</a></p>
+  </main>
+
+  <footer>
+    <div class="icones-footer">
+      <a href="#"><img src="./img/face.png" alt="facebook"></a>
+      <a href="#"><img src="./img/insta.png" alt="instagram"></a>
+      <a href="#"><img src="./img/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="./img/yt.png" alt="youtube"></a>
+    </div>
+    <div class="footer-right">
+      <button>SAIBA MAIS</button>
+      <img src="img/Logo.png" alt="Logo Oldanima" class="footer-logo">
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      signInWithEmailAndPassword,
+      signOut,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxn8VAezPWgOM1XcPhtlOn3JnqGC4CwVA",
+      authDomain: "dados-8fd2a.firebaseapp.com",
+      projectId: "dados-8fd2a",
+      storageBucket: "dados-8fd2a.appspot.com",
+      messagingSenderId: "641046130684",
+      appId: "1:641046130684:web:39a0db8f075897d8d44c79"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const loginBtn = document.querySelector("main button:not(#google-login)");
+    loginBtn.addEventListener("click", async () => {
+      const email = document.querySelector('input[type="email"]').value;
+      const password = document.querySelector('input[type="password"]').value;
+
+      if (!email || !password) {
+        alert("Por favor, preencha todos os campos.");
+        return;
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        const username = email.split("@")[0];
+        localStorage.setItem("username", username);
+        window.location.href = "site.html";
+      } catch (error) {
+        console.error("Erro de login:", error);
+        alert("Email ou senha incorretos. Por favor, tente novamente.");
+      }
+    });
+
+    const logoutBtn = document.getElementById("logout-btn");
+    if (logoutBtn) {
+      if (!localStorage.getItem("username")) {
+        logoutBtn.style.display = "none";
+      }
+
+      logoutBtn.addEventListener("click", async () => {
+        try {
+          await signOut(auth);
+          localStorage.removeItem("username");
+          alert("Logout realizado com sucesso!");
+          window.location.reload();
+        } catch (error) {
+          console.error("Erro ao deslogar:", error);
+          alert("Erro ao sair da conta.");
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+
+  <style>
+    @font-face {
+      font-family: nickson;
+      src: url('S&S Nickson One.otf');
+    }
+
+    body {
+      height: 100vh;
+      width: 100%;
+      margin: 0;
+      font-family: nickson;
+      background-color: #fdf6e4;
+      color: #000;
+      overflow-x: hidden;
+      letter-spacing: 0.15vh;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      font-size: 2vh;
+    }
+
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      z-index: 1;
+      background: repeating-linear-gradient(to bottom,
+          #000 0px, #000 40px,
+          #fff 40px, #fff 44px,
+          #fce4b3 44px, #fce4b3 80px,
+          #fff 80px, #fff 84px);
+    }
+
+    body::before {
+      left: 0;
+    }
+
+    body::after {
+      right: 0;
+    }
+
+    .logo {
+      align-self: flex-start;
+      margin: 0 60px;
+    }
+
+    .logo img {
+      display: flex;
+      height: 80px;
+      margin-top: 2vh;
+    }
+
+    main {
+      background-color: #000;
+      color: #fdeab5;
+      height: auto;
+      width: 70vh;
+      border-radius: 20px;
+      padding: 2vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 0;
+      z-index: 1;
+    }
+
+    main h1 {
+      align-self: flex-start;
+      margin-left: 50px;
+      margin-top: 10px;
+      font-size: 3.5vh;
+    }
+
+    .login-container {
+      background-color: #000;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 50vh;
+      color: #e5c585;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #fff;
+      border-radius: 8px;
+      background: #000;
+      color: #e5c585;
+      font-family: nickson;
+      letter-spacing: 0.1vh;
+      font-size: medium;
+    }
+
+    .login-container input::placeholder {
+      color: #e5c585;
+    }
+
+    main button {
+      background-color: #fdeab5;
+      color: black;
+      border-radius: 10px;
+      width: 350px;
+      height: 40px;
+      font-family: nickson;
+      font-size: 2vh;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .signup {
+      font-size: 1em;
+      color: #e5c585;
+      align-self: flex-start;
+      margin-left: 50px;
+    }
+
+    footer {
+      background-color: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      margin: 0 60px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .footer-right {
+      display: flex;
+      margin-left: auto;
+      align-items: center;
+      gap: 20px;
+    }
+
+    footer button {
+      background-color: #fdeab5;
+      color: #000;
+      border-radius: 10px;
+      font-family: nickson;
+      width: 100px;
+      height: 30px;
+      border: none;
+      font-size: large;
+      letter-spacing: 0.05vh;
+      cursor: pointer;
+    }
+
+    .footer-logo {
+      height: 60px;
+    }
+
+    .icones-footer {
+      display: flex;
+      gap: 10px;
+    }
+
+    .icones-footer img {
+      height: 6vh;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="logo">
+    <a href="site.html"><img src="img/Logo.png" alt="Logo Oldanima"></a>
+  </div>
+
+  <main>
+    <h1>CADASTRAR-SE</h1>
+    <div class="login-container">
+      <input type="text" id="nome" placeholder="Nome e sobrenome" />
+      <input type="email" id="email" placeholder="E-mail" />
+      <input type="password" id="password" placeholder="Senha" />
+      <input type="password" id="confirm-password" placeholder="Confirmar Senha" />
+    </div>
+    <button id="register-btn">Cadastrar</button>
+    <p class="signup">Já tem uma conta? <a href="login.html" style="text-decoration: underline; color: #fdeab5;">Entrar</a></p>
+  </main>
+
+  <footer>
+    <div class="icones-footer">
+      <a href="#"><img src="./img/face.png" alt="facebook"></a>
+      <a href="#"><img src="./img/insta.png" alt="instagram"></a>
+      <a href="#"><img src="./img/twitter.png" alt="twitter"></a>
+      <a href="#"><img src="./img/yt.png" alt="youtube"></a>
+    </div>
+    <div class="footer-right">
+      <button>SAIBA MAIS</button>
+      <img src="img/Logo.png" alt="Logo Oldanima" class="footer-logo">
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      updateProfile
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBxn8VAezPWgOM1XcPhtlOn3JnqGC4CwVA",
+      authDomain: "dados-8fd2a.firebaseapp.com",
+      projectId: "dados-8fd2a",
+      storageBucket: "dados-8fd2a.appspot.com",
+      messagingSenderId: "641046130684",
+      appId: "1:641046130684:web:39a0db8f075897d8d44c79"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const registerBtn = document.getElementById("register-btn");
+    registerBtn.addEventListener("click", async () => {
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+
+      if (!nome || !email || !password || !confirmPassword) {
+        alert("Preencha todos os campos.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        alert("As senhas não coincidem.");
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Atualiza nome do usuário no perfil do Firebase
+        await updateProfile(userCredential.user, {
+          displayName: nome
+        });
+
+        alert("Cadastro realizado com sucesso!");
+        window.location.href = "login.html";
+      } catch (error) {
+        console.error("Erro ao cadastrar:", error);
+        alert("Erro ao cadastrar: " + error.message);
+      }
+    });
+  </script>
+</body>
+
+</html>
