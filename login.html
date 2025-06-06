@@ -257,68 +257,69 @@
     </div>
   </footer>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      signOut,
-      GoogleAuthProvider,
-      signInWithPopup
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyBxn8VAezPWgOM1XcPhtlOn3JnqGC4CwVA",
-      authDomain: "dados-8fd2a.firebaseapp.com",
-      projectId: "dados-8fd2a",
-      storageBucket: "dados-8fd2a.appspot.com",
-      messagingSenderId: "641046130684",
-      appId: "1:641046130684:web:39a0db8f075897d8d44c79"
+      apiKey: "AIzaSyC0dZ3yxmoGTh9Os8zwKqKpsnR1i03SNM0",
+      authDomain: "oldanima-522d2.firebaseapp.com",
+      projectId: "oldanima-522d2",
+      storageBucket: "oldanima-522d2.firebasestorage.app",
+      messagingSenderId: "990144205615",
+      appId: "1:990144205615:web:0300139b60046368c587da"
     };
+    firebase.initializeApp(firebaseConfig);
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    const loginBtn = document.querySelector('button');
+    const emailInput = document.querySelector('input[name="email"]');
+    const passwordInput = document.querySelector('input[name="password"]');
 
-    const loginBtn = document.querySelector("main button:not(#google-login)");
-    loginBtn.addEventListener("click", async () => {
-      const email = document.querySelector('input[type="email"]').value;
-      const password = document.querySelector('input[type="password"]').value;
+    loginBtn.addEventListener('click', () => {
+      const email = emailInput.value;
+      const senha = passwordInput.value;
 
-      if (!email || !password) {
-        alert("Por favor, preencha todos os campos.");
-        return;
-      }
-
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        const username = email.split("@")[0];
-        localStorage.setItem("username", username);
-        window.location.href = "site.html";
-      } catch (error) {
-        console.error("Erro de login:", error);
-        alert("Email ou senha incorretos. Por favor, tente novamente.");
-      }
+      firebase.auth().signInWithEmailAndPassword(email, senha)
+        .then(() => {
+          window.location.href = 'site.html';
+        })
+        .catch(error => {
+          alert('Erro no login: ' + error.message);
+        });
     });
 
-    const logoutBtn = document.getElementById("logout-btn");
-    if (logoutBtn) {
-      if (!localStorage.getItem("username")) {
-        logoutBtn.style.display = "none";
-      }
+    // Login com Google
+    const googleBtn = document.createElement('button');
+    googleBtn.textContent = 'Entrar com Google';
+    googleBtn.style.marginTop = '10px';
+    googleBtn.style.backgroundColor = '#db4437';
+    googleBtn.style.color = '#fff';
+    googleBtn.style.border = 'none';
+    googleBtn.style.padding = '10px';
+    googleBtn.style.borderRadius = '10px';
+    googleBtn.style.fontFamily = 'nickson';
+    googleBtn.style.cursor = 'pointer';
+    document.querySelector('main').appendChild(googleBtn);
 
-      logoutBtn.addEventListener("click", async () => {
-        try {
-          await signOut(auth);
-          localStorage.removeItem("username");
-          alert("Logout realizado com sucesso!");
-          window.location.reload();
-        } catch (error) {
-          console.error("Erro ao deslogar:", error);
-          alert("Erro ao sair da conta.");
-        }
+    googleBtn.addEventListener('click', () => {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then(() => {
+          window.location.href = 'site.html';
+        })
+        .catch(error => {
+          alert('Erro com Google: ' + error.message);
+        });
+    });
+
+    // Logout (se quiser usar)
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      firebase.auth().signOut().then(() => {
+        alert('Você saiu.');
       });
-    }
+    });
   </script>
+
 </body>
 
 </html>
